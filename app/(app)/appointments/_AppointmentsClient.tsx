@@ -19,7 +19,8 @@ interface Appointment {
   };
   dentist?: {
     id: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     clinic?: {
       name: string;
       city: string;
@@ -196,7 +197,7 @@ function AppointmentCard({
 
             {appointment.dentist && (
               <p className="text-sm text-gray-600 mt-1">
-                Dr. {appointment.dentist.name}
+                Dr. {appointment.dentist.firstName + ' ' + appointment.dentist.lastName}
                 {appointment.dentist.clinic && (
                   <span className="text-gray-400">
                     {" "}— {appointment.dentist.clinic.name}, {appointment.dentist.clinic.city}

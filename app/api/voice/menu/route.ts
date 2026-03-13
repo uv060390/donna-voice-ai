@@ -23,17 +23,10 @@ export async function POST(req: NextRequest) {
 
     switch (digit) {
       case "1":
-        // Book new appointment — hand off to AI or collect info
+        // Book new appointment — start multi-step voice booking flow
         twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say voice="Polly.Joanna">
-    To book a new appointment online, please visit our website at dentcall.io and use our booking tool.
-    Alternatively, stay on the line and a receptionist will assist you shortly.
-  </Say>
-  <Gather numDigits="1" action="/api/voice/book" method="POST" timeout="10">
-    <Say voice="Polly.Joanna">Press 1 to hold for a receptionist, or press 2 to return to the main menu.</Say>
-  </Gather>
-  <Redirect>/api/voice/inbound</Redirect>
+  <Redirect method="POST">/api/voice/book?step=name</Redirect>
 </Response>`;
         break;
 

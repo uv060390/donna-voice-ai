@@ -73,8 +73,6 @@ export function parseClientConfig(raw: unknown): ClientConfig {
   return ClientConfigSchema.parse(raw);
 }
 
-export function parseClientConfigSafe(
-  raw: unknown
-): z.SafeParseReturnType<unknown, ClientConfig> {
+export function parseClientConfigSafe(raw: unknown) {
   return ClientConfigSchema.safeParse(raw);
 }

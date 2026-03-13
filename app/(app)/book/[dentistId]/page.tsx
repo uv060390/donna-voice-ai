@@ -23,7 +23,8 @@ const APPOINTMENT_TYPES = [
 
 interface DentistInfo {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   clinic?: { name: string; city: string; state: string };
 }
 
@@ -134,7 +135,7 @@ export default function BookingPage() {
         <CardBody>
           {dentist && (
             <div>
-              <p className="font-medium text-gray-800">Dr. {dentist.name}</p>
+              <p className="font-medium text-gray-800">Dr. {dentist.firstName} {dentist.lastName}</p>
               {dentist.clinic && (
                 <p className="text-sm text-gray-500">{dentist.clinic.name} — {dentist.clinic.city}, {dentist.clinic.state}</p>
               )}

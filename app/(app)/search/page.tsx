@@ -22,7 +22,8 @@ const SPECIALTIES = [
 
 interface Dentist {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   specialties: string[];
   yearsExperience?: number;
   rating?: number;
@@ -188,7 +189,7 @@ function DentistCard({ dentist }: { dentist: Dentist }) {
       <CardBody>
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-[#0d1b2a] truncate">Dr. {dentist.name}</h3>
+            <h3 className="font-semibold text-[#0d1b2a] truncate">Dr. {dentist.firstName} {dentist.lastName}</h3>
             {dentist.clinic && (
               <p className="text-sm text-gray-500 mt-0.5 truncate">
                 {dentist.clinic.name} — {dentist.clinic.city}, {dentist.clinic.state}

@@ -16,7 +16,8 @@ interface Slot {
 
 interface DentistDetail {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   specialties: string[];
   licenseNumber?: string;
   yearsExperience?: number;
@@ -104,10 +105,10 @@ export default function DentistProfilePage() {
             <CardBody>
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 text-2xl font-bold shrink-0">
-                  {dentist.name.charAt(0).toUpperCase()}
+                  {dentist.firstName.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h1 className="text-2xl font-bold text-[#0d1b2a]">Dr. {dentist.name}</h1>
+                  <h1 className="text-2xl font-bold text-[#0d1b2a]">Dr. {dentist.firstName} {dentist.lastName}</h1>
                   {dentist.clinic && (
                     <p className="text-gray-500 mt-0.5">{dentist.clinic.name}</p>
                   )}

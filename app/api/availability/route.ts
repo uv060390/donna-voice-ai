@@ -102,6 +102,32 @@ export async function GET(req: NextRequest) {
   }
 }
 
+export async function DELETE(req: NextRequest) {
+  try {
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    if (!id) {
+      return NextResponse.json({ error: "id required" }, { status: 400 });
+    }
+    const slot = await prisma.availabilitySlot.findUnique({ where: { id }, include: { dentist: true } });
+    if (!slot) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    const isOwnSlots = slot.dentist.userId === session.user.id;
+    const isAdmin = ["SUPER_ADMIN", "CLINIC_ADMIN"].includes(session.user.role);
+    if (!isOwnSlots && !isAdmin) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+    await prisma.availabilitySlot.delete({ where: { id } });
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("[DELETE /api/availability]", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
 /**
  * @openapi
  * /api/availability:
