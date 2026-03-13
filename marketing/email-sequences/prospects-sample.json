@@ -1,0 +1,42 @@
+[
+  {
+    "first_name": "Ashley",
+    "last_name": "Hansen",
+    "email": "ashley.hansen@saltdentalcollective.com",
+    "company_name": "Salt Dental Partners",
+    "job_title": "Regional Operations Manager",
+    "linkedin": "linkedin.com/in/ashleyshansen",
+    "city": "Liberty Lake",
+    "state": "Washington"
+  },
+  {
+    "first_name": "Jordan",
+    "last_name": "Dinola",
+    "email": "jdinola@sgadental.com",
+    "company_name": "SGA Dental Partners",
+    "job_title": "Chief Executive Officer",
+    "linkedin": "linkedin.com/in/jordan-p-dinola-156b8a104",
+    "city": "Ballston Lake",
+    "state": "New York"
+  },
+  {
+    "first_name": "Allan",
+    "last_name": "Jao",
+    "email": "ajao@godental365.com",
+    "company_name": "Dental365",
+    "job_title": "Dental Practice Manager",
+    "linkedin": "linkedin.com/in/allanjao",
+    "city": "New York",
+    "state": "New York"
+  },
+  {
+    "first_name": "Sepand",
+    "last_name": "Hokmabadi",
+    "email": "drhokmabadi@totalhealthdentalcare.com",
+    "company_name": "Total Health Dental Care",
+    "job_title": "Founder & CEO",
+    "linkedin": "linkedin.com/in/sepand-hokmabadi-98875134",
+    "city": "Menlo Park",
+    "state": "California"
+  }
+]
