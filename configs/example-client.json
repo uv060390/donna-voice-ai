@@ -1,0 +1,22 @@
+{
+  "clientId": "sunshine-dental-austin",
+  "name": "Sunshine Dental Austin",
+  "address": "1234 Main St Suite 200",
+  "city": "Austin",
+  "state": "TX",
+  "zipCode": "78701",
+  "timezone": "America/Chicago",
+  "areaCode": "512",
+  "pmsType": "dentrix",
+  "practicePhone": "+15125550100",
+  "practiceEmail": "info@sunshinedentalaustin.com",
+  "hours": {
+    "monday":    { "open": "08:00", "close": "17:00" },
+    "tuesday":   { "open": "08:00", "close": "17:00" },
+    "wednesday": { "open": "08:00", "close": "17:00" },
+    "thursday":  { "open": "08:00", "close": "17:00" },
+    "friday":    { "open": "08:00", "close": "15:00" },
+    "saturday":  { "open": "09:00", "close": "13:00" },
+    "sunday":    { "open": null,    "close": null }
+  }
+}
