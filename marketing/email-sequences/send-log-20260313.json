@@ -1,0 +1,14 @@
+{
+  "run_at": "2026-03-13T12:50:00Z",
+  "batch": 1,
+  "sequence_step": 1,
+  "from": "utkarsh@donna.associates",
+  "total_attempted": 50,
+  "sent": 0,
+  "failed": 50,
+  "blocker": "Resend domain not verified: donna.associates domain must be verified via DNS (SPF/DKIM) at https://resend.com/domains before sending is possible.",
+  "prospects_file": "marketing/email-sequences/prospects.json",
+  "errors": [
+    "All 50 contacts failed with: The donna.associates domain is not verified. Please, add and verify your domain on https://resend.com/domains"
+  ]
+}
