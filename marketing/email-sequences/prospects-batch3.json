@@ -1,0 +1,38 @@
+[
+  {
+    "first_name": "Angela",
+    "last_name": "Kattaviravong",
+    "email": "angela@celebratedental.com",
+    "company_name": "Celebrate Dental and Braces",
+    "job_title": "Tax Manager",
+    "linkedin": "linkedin.com/in/ACoAAB0C8ssBFdybHnVMf_xevuJ9CQP47MpG5wo",
+    "state": "Louisiana"
+  },
+  {
+    "first_name": "Desiree",
+    "last_name": "Tunnell",
+    "email": "dtunnell@vadentist.com",
+    "company_name": "Virginia Family Dentistry",
+    "job_title": "Marketing Director",
+    "linkedin": "linkedin.com/in/ACoAAAYu1EUBsS-LtzbSItdyOkI3Al02xugJX6g",
+    "state": "Virginia"
+  },
+  {
+    "first_name": "Tommy",
+    "last_name": "Lee",
+    "email": "tommy.lee@columbia.edu",
+    "company_name": "Bear Brook Pediatric Dentistry",
+    "job_title": "Founder & Board-Certified Pediatric Dentist",
+    "linkedin": "linkedin.com/in/ACoAAE9GgpoByzttIhkP-QzgnQkuPJJF487rJOI",
+    "state": "New Jersey"
+  },
+  {
+    "first_name": "Ashley",
+    "last_name": "Kastner",
+    "email": "akastner@hudecdental.com",
+    "company_name": "Hudec Dental",
+    "job_title": "Area Manager",
+    "linkedin": "linkedin.com/in/ACoAAB7BmykBHjddUHX3aobJKsWOC64a27IDuto",
+    "state": "Ohio"
+  }
+]
