@@ -173,9 +173,12 @@ function loadProspects(filePath: string): Prospect[] {
 // CLI entry
 async function main() {
   const args = process.argv.slice(2);
-  const batchSize = parseInt(args[args.indexOf("--batch") + 1] || "50");
-  const step = parseInt(args[args.indexOf("--sequence") + 1] || "1") as 1 | 2 | 3;
-  const file = args[args.indexOf("--file") + 1] || "marketing/email-sequences/prospects.json";
+  const batchIdx = args.indexOf("--batch");
+  const stepIdx = args.indexOf("--sequence");
+  const fileIdx = args.indexOf("--file");
+  const batchSize = batchIdx !== -1 ? parseInt(args[batchIdx + 1] || "50") : 50;
+  const step = (stepIdx !== -1 ? parseInt(args[stepIdx + 1] || "1") : 1) as 1 | 2 | 3;
+  const file = fileIdx !== -1 ? args[fileIdx + 1] : "marketing/email-sequences/prospects.json";
 
   if (!process.env.RESEND_API_KEY) {
     console.error("RESEND_API_KEY not set");
