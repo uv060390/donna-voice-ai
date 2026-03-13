@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-
-interface RouteParams {
-  params: { id: string };
-}
 
 /**
  * @openapi
@@ -25,10 +20,11 @@ interface RouteParams {
  *       404:
  *         description: Not found
  */
-export async function GET(_req: NextRequest, { params }: RouteParams) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const clinic = await prisma.clinic.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         dentists: {
           where: { isActive: true },
@@ -78,9 +74,10 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
  *       403:
  *         description: Forbidden
  */
-export async function PATCH(req: NextRequest, { params }: RouteParams) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const session = await getServerSession(authOptions);
+    const { id } = await params;
+    const session = await auth();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -89,7 +86,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const clinic = await prisma.clinic.findUnique({ where: { id: params.id } });
+    const clinic = await prisma.clinic.findUnique({ where: { id } });
     if (!clinic) {
       return NextResponse.json({ error: "Clinic not found" }, { status: 404 });
     }
@@ -118,7 +115,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     }
 
     const updated = await prisma.clinic.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
     });
 

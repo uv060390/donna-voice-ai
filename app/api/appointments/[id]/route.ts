@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { Prisma } from "@prisma/client";
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-
-interface RouteParams {
-  params: { id: string };
-}
 
 /**
  * @openapi
@@ -31,15 +27,16 @@ interface RouteParams {
  *       404:
  *         description: Not found
  */
-export async function GET(_req: NextRequest, { params }: RouteParams) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const session = await getServerSession(authOptions);
+    const { id } = await params;
+    const session = await auth();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const appointment = await prisma.appointment.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         dentist: { include: { clinic: true } },
         patient: true,
@@ -119,15 +116,16 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
  *       401:
  *         description: Unauthorized
  */
-export async function PATCH(req: NextRequest, { params }: RouteParams) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const session = await getServerSession(authOptions);
+    const { id } = await params;
+    const session = await auth();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const appointment = await prisma.appointment.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!appointment) {
@@ -157,7 +155,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
 
     // Handle reschedule
     if (newSlotId && newSlotId !== appointment.slotId) {
-      const updated = await prisma.$transaction(async (tx) => {
+      const updated = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
         // Free up old slot
         if (appointment.slotId) {
           await tx.availabilitySlot.update({
@@ -181,7 +179,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
         });
 
         return tx.appointment.update({
-          where: { id: params.id },
+          where: { id },
           data: {
             slotId: newSlotId,
             startTime: newSlot.startTime,
@@ -225,7 +223,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     }
 
     const updated = await prisma.appointment.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
       include: { dentist: { include: { clinic: true } }, patient: true },
     });
@@ -264,9 +262,10 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
  *       403:
  *         description: Forbidden
  */
-export async function DELETE(_req: NextRequest, { params }: RouteParams) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const session = await getServerSession(authOptions);
+    const { id } = await params;
+    const session = await auth();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -276,7 +275,7 @@ export async function DELETE(_req: NextRequest, { params }: RouteParams) {
     }
 
     const appointment = await prisma.appointment.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!appointment) {
@@ -294,7 +293,7 @@ export async function DELETE(_req: NextRequest, { params }: RouteParams) {
       });
     }
 
-    await prisma.appointment.delete({ where: { id: params.id } });
+    await prisma.appointment.delete({ where: { id } });
 
     return NextResponse.json({ message: "Appointment deleted" });
   } catch (error) {

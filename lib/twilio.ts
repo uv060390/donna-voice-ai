@@ -33,14 +33,12 @@ export async function sendSmsReminder({
  */
 export async function sendSmsConfirmation({
   to,
-  patientName,
   dentistName,
   appointmentDate,
   appointmentTime,
   confirmationCode,
 }: {
   to: string;
-  patientName: string;
   dentistName: string;
   appointmentDate: string;
   appointmentTime: string;
@@ -62,7 +60,7 @@ export function generateInboundIVR(): string {
   const twiml = new VoiceResponse();
 
   const gather = twiml.gather({
-    numDigits: "1",
+    numDigits: 1,
     action: "/api/voice/menu",
     method: "POST",
     timeout: 10,

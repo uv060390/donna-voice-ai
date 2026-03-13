@@ -66,11 +66,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Try to match caller to a patient by phone number
-    const patient = from
-      ? await prisma.patient.findFirst({
-          where: { phone: from },
-        })
-      : null;
+    // Pre-load patient for future use in personalized IVR
+    await (from
+      ? prisma.patient.findFirst({ where: { phone: from } })
+      : Promise.resolve(null));
 
     // Generate IVR TwiML
     const twiml = generateInboundIVR();

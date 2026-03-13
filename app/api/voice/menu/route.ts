@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const digit = formData.get("Digits") as string;
-    const callSid = formData.get("CallSid") as string;
+    // callSid available for future call tracking: formData.get("CallSid")
 
     let twiml = "";
 

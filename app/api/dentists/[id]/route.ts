@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-
-interface RouteParams {
-  params: { id: string };
-}
 
 /**
  * @openapi
@@ -25,10 +20,11 @@ interface RouteParams {
  *       404:
  *         description: Dentist not found
  */
-export async function GET(_req: NextRequest, { params }: RouteParams) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const dentist = await prisma.dentist.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         clinic: true,
         availabilitySlots: {
@@ -81,15 +77,16 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
  *       404:
  *         description: Not found
  */
-export async function PATCH(req: NextRequest, { params }: RouteParams) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const session = await getServerSession(authOptions);
+    const { id } = await params;
+    const session = await auth();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const dentist = await prisma.dentist.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!dentist) {
@@ -126,7 +123,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     }
 
     const updated = await prisma.dentist.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
       include: { clinic: true },
     });
@@ -163,9 +160,10 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
  *       403:
  *         description: Forbidden
  */
-export async function DELETE(_req: NextRequest, { params }: RouteParams) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const session = await getServerSession(authOptions);
+    const { id } = await params;
+    const session = await auth();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -175,7 +173,7 @@ export async function DELETE(_req: NextRequest, { params }: RouteParams) {
     }
 
     const dentist = await prisma.dentist.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!dentist) {
@@ -184,7 +182,7 @@ export async function DELETE(_req: NextRequest, { params }: RouteParams) {
 
     // Soft delete — set isActive = false
     await prisma.dentist.update({
-      where: { id: params.id },
+      where: { id },
       data: { isActive: false },
     });
 
